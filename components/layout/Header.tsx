@@ -29,14 +29,16 @@ export default function Header({ onMenuClick }: HeaderProps) {
         <div className="hidden md:block text-sm text-gray-300">
           May-July 2025
         </div>
-        <Image
-          src="/gs-logo-light.png"
-          alt="Growth Science"
-          width={120}
-          height={40}
-          className="h-8 w-auto"
-          priority
-        />
+        <div className="relative h-10 w-[110px]">
+          <Image
+            src="/gs-logo-light.png"
+            alt="Growth Science"
+            fill
+            className="object-contain"
+            priority
+            unoptimized
+          />
+        </div>
       </div>
     </header>
   );
