@@ -13,20 +13,31 @@ export default function TrafficPage() {
   const trafficData = [
     {
       metric: "Total Visitors",
-      period1: period1.totalVisitors,
-      period2: period2.totalVisitors,
+      ...(selectedPeriod !== "period2" && { period1: period1.totalVisitors }),
+      ...(selectedPeriod !== "period1" && { period2: period2.totalVisitors }),
     },
     {
       metric: "Chatbot Interactions",
-      period1: period1.chatbotInteractions,
-      period2: period2.chatbotInteractions,
+      ...(selectedPeriod !== "period2" && { period1: period1.chatbotInteractions }),
+      ...(selectedPeriod !== "period1" && { period2: period2.chatbotInteractions }),
     },
     {
       metric: "Add-to-Cart",
-      period1: period1.addToCartActions,
-      period2: period2.addToCartActions,
+      ...(selectedPeriod !== "period2" && { period1: period1.addToCartActions }),
+      ...(selectedPeriod !== "period1" && { period2: period2.addToCartActions }),
     },
   ];
+
+  const getDataKeys = () => {
+    const keys = [];
+    if (selectedPeriod !== "period2") {
+      keys.push({ key: "period1", name: "First 30 Days", color: "#4a90e2" });
+    }
+    if (selectedPeriod !== "period1") {
+      keys.push({ key: "period2", name: "Second 30 Days", color: "#1e3a5f" });
+    }
+    return keys;
+  };
 
   return (
     <div className="space-y-8">
@@ -75,10 +86,7 @@ export default function TrafficPage() {
         <h3 className="mb-6">Traffic & Engagement Metrics</h3>
         <ComparisonBarChart
           data={trafficData}
-          dataKeys={[
-            { key: "period1", name: "First 30 Days", color: "#4a90e2" },
-            { key: "period2", name: "Second 30 Days", color: "#1e3a5f" },
-          ]}
+          dataKeys={getDataKeys()}
           xAxisKey="metric"
           yAxisLabel="Count"
         />

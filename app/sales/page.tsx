@@ -9,28 +9,41 @@ import { formatCurrency, formatNumber } from "@/lib/utils";
 export default function SalesPage() {
   const [selectedPeriod, setSelectedPeriod] = useState<Period>("both");
 
+  // Dynamically build chart data based on selected period
   const salesComparisonData = [
     {
       metric: "Total Sales",
-      period1: period1.totalSales,
-      period2: period2.totalSales,
+      ...(selectedPeriod !== "period2" && { period1: period1.totalSales }),
+      ...(selectedPeriod !== "period1" && { period2: period2.totalSales }),
     },
     {
       metric: "Daily Average",
-      period1: period1.dailyAverage,
-      period2: period2.dailyAverage,
+      ...(selectedPeriod !== "period2" && { period1: period1.dailyAverage }),
+      ...(selectedPeriod !== "period1" && { period2: period2.dailyAverage }),
     },
     {
       metric: "Chatbot Sales",
-      period1: period1.chatbotDrivenSales,
-      period2: period2.chatbotDrivenSales,
+      ...(selectedPeriod !== "period2" && { period1: period1.chatbotDrivenSales }),
+      ...(selectedPeriod !== "period1" && { period2: period2.chatbotDrivenSales }),
     },
     {
       metric: "Customers",
-      period1: period1.customersOrdered,
-      period2: period2.customersOrdered,
+      ...(selectedPeriod !== "period2" && { period1: period1.customersOrdered }),
+      ...(selectedPeriod !== "period1" && { period2: period2.customersOrdered }),
     },
   ];
+
+  // Filter chart dataKeys based on selected period
+  const getDataKeys = () => {
+    const keys = [];
+    if (selectedPeriod !== "period2") {
+      keys.push({ key: "period1", name: "First 30 Days", color: "#4a90e2" });
+    }
+    if (selectedPeriod !== "period1") {
+      keys.push({ key: "period2", name: "Second 30 Days", color: "#1e3a5f" });
+    }
+    return keys;
+  };
 
   return (
     <div className="space-y-8">
@@ -87,10 +100,7 @@ export default function SalesPage() {
         <h3 className="mb-6">Sales Metrics Comparison</h3>
         <ComparisonBarChart
           data={salesComparisonData}
-          dataKeys={[
-            { key: "period1", name: "First 30 Days", color: "#4a90e2" },
-            { key: "period2", name: "Second 30 Days", color: "#1e3a5f" },
-          ]}
+          dataKeys={getDataKeys()}
           xAxisKey="metric"
           yAxisLabel="Value ($)"
         />

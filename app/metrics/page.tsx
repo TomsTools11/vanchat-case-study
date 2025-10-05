@@ -12,23 +12,35 @@ export default function MetricsPage() {
   const conversionData = [
     {
       metric: "Add-to-Cart Rate",
-      period1: period1.addToCartRate,
-      period2: period2.addToCartRate,
+      ...(selectedPeriod !== "period2" && { period1: period1.addToCartRate }),
+      ...(selectedPeriod !== "period1" && { period2: period2.addToCartRate }),
       industry: industryBenchmarks.addToCartAverage,
     },
     {
       metric: "Chatbot Conversion",
-      period1: period1.chatbotConversionRate,
-      period2: period2.chatbotConversionRate,
+      ...(selectedPeriod !== "period2" && { period1: period1.chatbotConversionRate }),
+      ...(selectedPeriod !== "period1" && { period2: period2.chatbotConversionRate }),
       industry: industryBenchmarks.chatbotConversionAverage,
     },
     {
       metric: "Interaction Rate",
-      period1: period1.interactionRate,
-      period2: period2.interactionRate,
+      ...(selectedPeriod !== "period2" && { period1: period1.interactionRate }),
+      ...(selectedPeriod !== "period1" && { period2: period2.interactionRate }),
       industry: industryBenchmarks.chatbotInteractionRate,
     },
   ];
+
+  const getDataKeys = () => {
+    const keys = [];
+    if (selectedPeriod !== "period2") {
+      keys.push({ key: "period1", name: "First 30 Days", color: "#4a90e2" });
+    }
+    if (selectedPeriod !== "period1") {
+      keys.push({ key: "period2", name: "Second 30 Days", color: "#1e3a5f" });
+    }
+    keys.push({ key: "industry", name: "Industry Average", color: "#9ca3af" });
+    return keys;
+  };
 
   return (
     <div className="space-y-8">
@@ -77,11 +89,7 @@ export default function MetricsPage() {
         <h3 className="mb-6">Conversion Rates: VanChat vs Industry</h3>
         <ComparisonBarChart
           data={conversionData}
-          dataKeys={[
-            { key: "period1", name: "First 30 Days", color: "#4a90e2" },
-            { key: "period2", name: "Second 30 Days", color: "#1e3a5f" },
-            { key: "industry", name: "Industry Average", color: "#9ca3af" },
-          ]}
+          dataKeys={getDataKeys()}
           xAxisKey="metric"
           yAxisLabel="Conversion Rate (%)"
         />
