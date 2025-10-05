@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Menu } from "lucide-react";
 
 interface HeaderProps {
@@ -24,8 +25,18 @@ export default function Header({ onMenuClick }: HeaderProps) {
         </div>
       </div>
 
-      <div className="ml-auto text-sm text-gray-300">
-        May-July 2025
+      <div className="ml-auto flex items-center gap-4">
+        <div className="hidden md:block text-sm text-gray-300">
+          May-July 2025
+        </div>
+        <Image
+          src="/gs-logo-light.png"
+          alt="Growth Science"
+          width={120}
+          height={40}
+          className="h-8 w-auto"
+          priority
+        />
       </div>
     </header>
   );
