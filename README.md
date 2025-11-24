@@ -148,7 +148,7 @@ This is a production application. For bug reports or feature requests, please co
 
 ---
 
-**Built with ❤️ by Growth Science AI**
+*Made with ❤️ in Milwaukee, WI*
 
 🤖 *Generated with [Claude Code](https://claude.com/claude-code)*
 
