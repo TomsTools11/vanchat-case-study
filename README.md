@@ -150,6 +150,4 @@ This is a production application. For bug reports or feature requests, please co
 
 *Made with ❤️ in Milwaukee, WI*
 
-🤖 *Generated with [Claude Code](https://claude.com/claude-code)*
-
 Co-Authored-By: Claude <noreply@anthropic.com>
